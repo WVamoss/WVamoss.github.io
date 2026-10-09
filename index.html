@@ -1,262 +1,507 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WVamoss Labs | Edge Intelligence & Autonomous Anomaly Detection Platform</title>
-  <meta name="description" content="Next-generation resource-aware edge intelligence platform powered by Claude 3.5 Sonnet and lightweight neural architectures.">
+  <title>WVamoss Labs — Edge Intelligence & Telemetry Diagnostics</title>
+  <meta name="description" content="Resource-aware edge anomaly detection and autonomous diagnostic reasoning for IoT & industrial infrastructure.">
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
           },
           colors: {
-            brand: {
-              50: '#fbf7ee',
-              100: '#f5edd6',
-              200: '#ebdaa9',
-              300: '#dfc277',
-              400: '#d4aa4d',
-              500: '#c59132',
-              600: '#ab7427',
-              700: '#895522',
-              800: '#714421',
-              900: '#5e3a20',
-              accent: '#d97706',
-              glow: '#f59e0b'
+            surface: {
+              base: '#0c0e12',
+              card: '#12161f',
+              border: '#1f2533',
+              subtle: '#181e2b',
+              hover: '#262e3d'
+            },
+            accent: {
+              DEFAULT: '#3b82f6',
+              light: '#60a5fa',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              purple: '#8b5cf6'
             }
           }
         }
       }
     }
   </script>
+  <style>
+    body {
+      background-color: #0c0e12;
+      color: #e2e8f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .grid-bg {
+      background-size: 32px 32px;
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #262e3d;
+      border-radius: 4px;
+    }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-200 antialiased overflow-x-hidden">
+<body class="min-h-screen antialiased text-slate-200 grid-bg selection:bg-blue-600/30 selection:text-blue-300">
 
-  <!-- Glow Background Accent -->
-  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-amber-500/10 blur-[140px] pointer-events-none rounded-full -z-10"></div>
+  <!-- Top Announcement Bar -->
+  <div class="border-b border-surface-border bg-surface-card/60 px-4 py-2 text-xs font-mono text-center text-slate-400 flex items-center justify-center gap-3">
+    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> v0.4.2 RELEASED
+    </span>
+    <span>Resource-Aware Edge Intelligence Framework (RAEIF) core engine available for ARM64 & x86_64</span>
+    <a href="#install" class="text-blue-400 hover:text-blue-300 underline font-medium">Quickstart →</a>
+  </div>
 
-  <!-- Navbar -->
-  <header class="border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-50 bg-slate-950/80">
-    <div class="max-w-7xl mx-auto px-6 h-18 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center font-black text-slate-950 text-lg shadow-lg shadow-amber-500/20">
-          W
-        </div>
-        <div class="flex flex-col">
-          <span class="font-bold text-base tracking-tight text-white flex items-center gap-1.5">
-            WVamoss Labs
-            <span class="px-1.5 py-0.5 text-[10px] uppercase font-mono tracking-widest bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded">AI</span>
-          </span>
-          <span class="text-[11px] text-slate-400 font-mono">Edge Intelligence Systems</span>
-        </div>
+  <!-- Navigation -->
+  <header class="border-b border-surface-border/80 sticky top-0 z-40 bg-surface-base/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-8">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-mono font-bold text-white text-base shadow-md shadow-blue-500/20">
+            W
+          </div>
+          <div>
+            <div class="font-bold text-sm tracking-tight text-white flex items-center gap-2">
+              WVamoss Labs
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-surface-subtle border border-surface-border text-slate-400 font-mono">SYS</span>
+            </div>
+            <div class="text-[10px] font-mono text-slate-500 leading-none">Edge Anomaly Diagnostics</div>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-xs font-medium text-slate-300">
+          <a href="#overview" class="hover:text-white transition">Overview</a>
+          <a href="#console-preview" class="hover:text-white transition">Edge Console</a>
+          <a href="#architecture" class="hover:text-white transition">Architecture</a>
+          <a href="#benchmarks" class="hover:text-white transition">Benchmarks</a>
+          <a href="#docs" class="hover:text-white transition">Documentation</a>
+        </nav>
       </div>
-      
-      <nav class="hidden md:flex items-center gap-8 text-sm text-slate-300 font-medium">
-        <a href="#platform" class="hover:text-amber-400 transition">Platform</a>
-        <a href="#architecture" class="hover:text-amber-400 transition">Architecture</a>
-        <a href="#benchmarks" class="hover:text-amber-400 transition">Benchmarks</a>
-        <a href="#use-cases" class="hover:text-amber-400 transition">Use Cases</a>
-      </nav>
 
       <div class="flex items-center gap-4">
-        <a href="#waitlist" class="px-4 py-2 text-sm font-semibold rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 transition shadow-lg shadow-amber-500/20">
-          Request Pilot Access
+        <a href="https://github.com/WVamoss" target="_blank" class="hidden sm:flex items-center gap-2 px-3 py-1.5 text-xs font-mono rounded-md bg-surface-card hover:bg-surface-hover border border-surface-border text-slate-300 transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <a href="#install" class="px-3.5 py-1.5 text-xs font-semibold rounded-md bg-blue-600 hover:bg-blue-500 text-white transition shadow-sm">
+          Get Started
         </a>
       </div>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <section class="relative pt-24 pb-20 px-6 max-w-6xl mx-auto text-center">
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-amber-500/30 text-xs font-mono text-amber-300 mb-8 shadow-sm">
-      <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-      Powered by Anthropic Claude 3.5 Sonnet API
+  <section id="overview" class="pt-16 pb-14 px-6 max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Column: Value Prop & Pitch -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-surface-card border border-surface-border text-xs font-mono text-slate-300">
+          <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+          Autonomous Edge Observability
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+          Resource-Aware Edge Intelligence for Industrial IoT Anomaly Detection
+        </h1>
+
+        <p class="text-sm sm:text-base text-slate-400 leading-relaxed">
+          WVamoss Labs runs ultra-lightweight neural inference (<span class="text-slate-200 font-medium">SNN, CAE, Isolation Forest</span>) on resource-constrained hardware with sub-100ms cycle times. Critical telemetry anomalies are automatically dispatched to cloud reasoning agents powered by <span class="text-slate-200 font-medium">Claude 3.5 Sonnet</span> for root-cause diagnosis.
+        </p>
+
+        <!-- Command / Install Bar -->
+        <div class="p-3 rounded-lg bg-surface-card border border-surface-border font-mono text-xs text-slate-300 flex items-center justify-between">
+          <div class="flex items-center gap-2 truncate">
+            <span class="text-blue-400 select-none">$</span>
+            <span class="truncate">pip install wvamoss-edge-runtime</span>
+          </div>
+          <button onclick="navigator.clipboard.writeText('pip install wvamoss-edge-runtime'); alert('Command copied to clipboard');" class="text-[11px] px-2 py-1 rounded bg-surface-subtle hover:bg-surface-hover border border-surface-border text-slate-400 hover:text-white transition">
+            Copy
+          </button>
+        </div>
+
+        <!-- Metric Grid -->
+        <div class="grid grid-cols-3 gap-3 pt-2">
+          <div class="p-3 rounded-lg bg-surface-card/60 border border-surface-border">
+            <div class="font-mono text-lg font-bold text-white">&lt;85ms</div>
+            <div class="text-[11px] text-slate-500 uppercase font-mono mt-0.5">Edge Latency</div>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-card/60 border border-surface-border">
+            <div class="font-mono text-lg font-bold text-emerald-400">99.2%</div>
+            <div class="text-[11px] text-slate-500 uppercase font-mono mt-0.5">Gate Accuracy</div>
+          </div>
+          <div class="p-3 rounded-lg bg-surface-card/60 border border-surface-border">
+            <div class="font-mono text-lg font-bold text-blue-400">140MB</div>
+            <div class="text-[11px] text-slate-500 uppercase font-mono mt-0.5">RAM Envelope</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 text-xs font-mono text-slate-400">
+          <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Zero Cloud Lock-in</span>
+          <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Raspberry Pi 4 Verified</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Edge Console Preview -->
+      <div id="console-preview" class="lg:col-span-7">
+        <div class="rounded-xl border border-surface-border bg-surface-card overflow-hidden shadow-2xl">
+          
+          <!-- Console Top Window Bar -->
+          <div class="bg-surface-subtle px-4 py-3 border-b border-surface-border flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+              <span class="ml-2 font-mono text-xs font-medium text-slate-300">edge-pi4-sensor-node-01 // RAEIF Telemetry Feed</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> STREAMING
+              </span>
+            </div>
+          </div>
+
+          <!-- Console Control Panel -->
+          <div class="p-5 space-y-5">
+
+            <!-- Hardware & Node Status Strip -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+              <div class="p-2.5 rounded bg-surface-base border border-surface-border">
+                <div class="text-slate-500 text-[10px]">ACTIVE MODEL</div>
+                <div class="font-bold text-slate-200 mt-0.5 text-xs">SNN (32-16 Spike)</div>
+              </div>
+              <div class="p-2.5 rounded bg-surface-base border border-surface-border">
+                <div class="text-slate-500 text-[10px]">CPU UTILIZATION</div>
+                <div class="font-bold text-emerald-400 mt-0.5 text-xs">14.2% [BCM2711]</div>
+              </div>
+              <div class="p-2.5 rounded bg-surface-base border border-surface-border">
+                <div class="text-slate-500 text-[10px]">WINDOW DRIFT</div>
+                <div class="font-bold text-amber-400 mt-0.5 text-xs">Δ 1.84σ [ALERT]</div>
+              </div>
+              <div class="p-2.5 rounded bg-surface-base border border-surface-border">
+                <div class="text-slate-500 text-[10px]">INFERENCE TIME</div>
+                <div class="font-bold text-blue-400 mt-0.5 text-xs">18.4ms / window</div>
+              </div>
+            </div>
+
+            <!-- Real Telemetry Sensor Matrix -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span>PHYSICAL SENSOR TELEMETRY (REAL-TIME STREAM)</span>
+                <span class="text-[11px] text-slate-500">Sampling: 1.0s</span>
+              </div>
+              
+              <div class="grid sm:grid-cols-2 gap-3 font-mono text-xs">
+                <!-- Sensor 1: pH -->
+                <div class="p-3 rounded bg-surface-base border border-surface-border">
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="text-slate-400">pH Level (Acidity)</span>
+                    <span class="font-bold text-emerald-400">6.18 pH</span>
+                  </div>
+                  <div class="w-full bg-surface-border h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-emerald-500 h-full rounded-full" style="width: 68%"></div>
+                  </div>
+                  <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                    <span>Threshold: 5.5 - 6.5</span>
+                    <span>Status: NOMINAL</span>
+                  </div>
+                </div>
+
+                <!-- Sensor 2: EC -->
+                <div class="p-3 rounded bg-surface-base border border-surface-border">
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="text-slate-400">Electrical Conductivity</span>
+                    <span class="font-bold text-amber-400">2.18 mS/cm</span>
+                  </div>
+                  <div class="w-full bg-surface-border h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-amber-500 h-full rounded-full" style="width: 88%"></div>
+                  </div>
+                  <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                    <span>Threshold: 1.2 - 2.0</span>
+                    <span class="text-amber-400 font-semibold">DRIFT DETECTED</span>
+                  </div>
+                </div>
+
+                <!-- Sensor 3: Water Temp -->
+                <div class="p-3 rounded bg-surface-base border border-surface-border">
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="text-slate-400">Water Temperature</span>
+                    <span class="font-bold text-slate-200">19.8 °C</span>
+                  </div>
+                  <div class="w-full bg-surface-border h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-blue-500 h-full rounded-full" style="width: 52%"></div>
+                  </div>
+                  <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                    <span>Threshold: 18.0 - 22.0 °C</span>
+                    <span>Status: NOMINAL</span>
+                  </div>
+                </div>
+
+                <!-- Sensor 4: Dissolved Oxygen -->
+                <div class="p-3 rounded bg-surface-base border border-surface-border">
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="text-slate-400">Dissolved Oxygen (DO)</span>
+                    <span class="font-bold text-emerald-400">6.4 mg/L</span>
+                  </div>
+                  <div class="w-full bg-surface-border h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-emerald-500 h-full rounded-full" style="width: 74%"></div>
+                  </div>
+                  <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                    <span>Ground Truth: &gt; 5.0 mg/L</span>
+                    <span>Status: NOMINAL</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Diagnostics Reasoning Agent Terminal -->
+            <div class="rounded-lg bg-surface-base border border-surface-border p-3 font-mono text-xs space-y-2">
+              <div class="flex items-center justify-between border-b border-surface-border pb-2">
+                <span class="text-slate-400 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                  Autonomous Diagnostic Agent (Claude 3.5 Sonnet Tool Use)
+                </span>
+                <span class="text-[10px] text-slate-500">Latency: 280ms · Cached</span>
+              </div>
+              <div class="text-slate-300 space-y-1 text-[11px] leading-relaxed">
+                <p class="text-slate-500"># Inbound anomaly vector triggered by SAW Decision Gate (F1=0.88, Latency=18ms):</p>
+                <p><span class="text-purple-400 font-semibold">[DIAGNOSIS]:</span> EC spike to 2.18 mS/cm with stable water temp (19.8°C) indicates localized nutrient solution concentration surge or dosing pump overshoot.</p>
+                <p><span class="text-emerald-400 font-semibold">[RECOMMENDED ACTUATION]:</span> Triggering actuator relay #2: Dilution valve open for 4.5s. Re-evaluate telemetry window after 30s relaxation cycle.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Console Footer -->
+          <div class="bg-surface-subtle px-4 py-2.5 border-t border-surface-border flex items-center justify-between text-[11px] font-mono text-slate-400">
+            <span>RAEIF Engine: Online · Raspberry Pi 4 Model B (4GB)</span>
+            <span class="text-emerald-400 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 0 Failures / 24h
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Technical Architecture Pipeline -->
+  <section id="architecture" class="py-20 px-6 max-w-7xl mx-auto border-t border-surface-border">
+    <div class="max-w-3xl mb-12">
+      <div class="text-xs font-mono uppercase tracking-widest text-blue-400">Engineering Pipeline</div>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2">How WVamoss Edge Architecture Operates</h2>
+      <p class="text-sm text-slate-400 mt-2">
+        A decoupled, two-tier system designed for ultra-low latency physical edge response and deep cognitive diagnostic reasoning.
+      </p>
     </div>
 
-    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-[1.15]">
-      Autonomous Edge Intelligence for <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500">Real-Time Anomaly Triage</span>
-    </h1>
+    <div class="grid md:grid-cols-3 gap-6">
+      
+      <!-- Tier 1 -->
+      <div class="p-6 rounded-xl bg-surface-card border border-surface-border flex flex-col justify-between">
+        <div>
+          <div class="font-mono text-xs text-blue-400 font-bold mb-3">TIER 01 // PHYSICAL SENSOR INGESTION</div>
+          <h3 class="text-base font-bold text-white mb-2">Multi-Sensor Windowing</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Direct GPIO/I2C/Serial data acquisition from water quality and industrial sensors. Telemetry is buffered in sliding windows with z-score normalization directly in local memory.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-surface-border font-mono text-[11px] text-slate-500">
+          Latency: &lt; 2ms · Buffer: 120 samples
+        </div>
+      </div>
 
-    <p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed">
-      WVamoss Labs bridges ultra-lightweight neural inference at the physical edge with deep reasoning LLM agents—delivering zero-latency anomaly detection and automated root-cause diagnosis.
-    </p>
+      <!-- Tier 2 -->
+      <div class="p-6 rounded-xl bg-surface-card border border-surface-border flex flex-col justify-between">
+        <div>
+          <div class="font-mono text-xs text-emerald-400 font-bold mb-3">TIER 02 // EDGE ADAPTIVE INFERENCE</div>
+          <h3 class="text-base font-bold text-white mb-2">SAW-Driven Model Selector</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            The Simple Additive Weighting (SAW) selector dynamically trades off F1-score (0.25 benefit), Latency (0.35 cost), RAM (0.20 cost), and CPU (0.20 cost) across SNN, CAE, and Isolation Forest models.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-surface-border font-mono text-[11px] text-slate-500">
+          Gate Threshold: F1 &gt;= 0.80 · Zero Cloud Trip
+        </div>
+      </div>
 
-    <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="#waitlist" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 transition shadow-xl shadow-amber-500/25">
-        Start Free Enterprise Pilot
-      </a>
-      <a href="#architecture" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-sm bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 transition">
-        Explore Technical Spec →
-      </a>
+      <!-- Tier 3 -->
+      <div class="p-6 rounded-xl bg-surface-card border border-surface-border flex flex-col justify-between">
+        <div>
+          <div class="font-mono text-xs text-purple-400 font-bold mb-3">TIER 03 // CLAUDE 3.5 SONNET DIAGNOSTICS</div>
+          <h3 class="text-base font-bold text-white mb-2">Cognitive Reasoning Agent</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            When anomaly persistence breaches critical gates, contextual telemetry vectors stream to Claude 3.5 Sonnet via Prompt Caching & Tool Use for root-cause analysis and automated actuator dispatch.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-surface-border font-mono text-[11px] text-slate-500">
+          Tools: Actuator Relays · Telemetry History
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Benchmark Comparison Section -->
+  <section id="benchmarks" class="py-20 px-6 max-w-7xl mx-auto border-t border-surface-border">
+    <div class="max-w-3xl mb-12">
+      <div class="text-xs font-mono uppercase tracking-widest text-emerald-400">Benchmark Data</div>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2">Tested on Real Physical Hardware (Raspberry Pi 4)</h2>
+      <p class="text-sm text-slate-400 mt-2">
+        Empirical evaluation across three lightweight anomaly detection models on hydroponic strawberry sensory telemetry.
+      </p>
     </div>
 
-    <!-- Metrics Bar -->
-    <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm">
-      <div class="p-4 text-left">
-        <div class="font-mono text-3xl font-extrabold text-amber-400">&lt;120ms</div>
-        <div class="text-xs text-slate-400 mt-1 uppercase font-medium tracking-wider">Edge Inference Window</div>
+    <div class="overflow-x-auto rounded-xl border border-surface-border bg-surface-card">
+      <table class="w-full text-left font-mono text-xs">
+        <thead class="bg-surface-subtle border-b border-surface-border text-slate-400 text-[11px]">
+          <tr>
+            <th class="py-3 px-4">MODEL ARCHITECTURE</th>
+            <th class="py-3 px-4">DETECTION F1-SCORE</th>
+            <th class="py-3 px-4">INFERENCE LATENCY</th>
+            <th class="py-3 px-4">RAM FOOTPRINT</th>
+            <th class="py-3 px-4">CPU CONSUMPTION</th>
+            <th class="py-3 px-4">SUITABILITY</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-surface-border text-slate-300">
+          <tr class="hover:bg-surface-hover/50">
+            <td class="py-3 px-4 font-semibold text-white">Spiking Neural Network (SNN 32-16)</td>
+            <td class="py-3 px-4 text-emerald-400 font-semibold">0.892</td>
+            <td class="py-3 px-4 text-blue-400">18.4 ms</td>
+            <td class="py-3 px-4">42 MB</td>
+            <td class="py-3 px-4">12.4%</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px]">Optimal (Real-time)</span></td>
+          </tr>
+          <tr class="hover:bg-surface-hover/50">
+            <td class="py-3 px-4 font-semibold text-white">Convolutional Autoencoder (CAE 16-8-16)</td>
+            <td class="py-3 px-4 text-emerald-400 font-semibold">0.914</td>
+            <td class="py-3 px-4">46.2 ms</td>
+            <td class="py-3 px-4">88 MB</td>
+            <td class="py-3 px-4">24.8%</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[10px]">High Accuracy</span></td>
+          </tr>
+          <tr class="hover:bg-surface-hover/50">
+            <td class="py-3 px-4 font-semibold text-white">Isolation Forest (100 Trees, 256 Samples)</td>
+            <td class="py-3 px-4 text-slate-300">0.841</td>
+            <td class="py-3 px-4">84.0 ms</td>
+            <td class="py-3 px-4">124 MB</td>
+            <td class="py-3 px-4">38.1%</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-slate-500/10 text-slate-400 border border-slate-500/20 text-[10px]">Baseline Baseline</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Python SDK Integration Section -->
+  <section id="docs" class="py-20 px-6 max-w-7xl mx-auto border-t border-surface-border">
+    <div class="grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-5 space-y-4">
+        <div class="text-xs font-mono uppercase tracking-widest text-blue-400">Developer First</div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">Native Python SDK for Edge Run & Cloud Reasoning</h2>
+        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          Embed the RAEIF engine into existing industrial automation pipelines with less than 15 lines of Python code. Zero configuration, native ARM64 support.
+        </p>
+        <div class="space-y-2 pt-2 text-xs font-mono text-slate-300">
+          <div class="flex items-center gap-2">✓ Python 3.9 - 3.12 support</div>
+          <div class="flex items-center gap-2">✓ Integrated Anthropic Client with Tool Use</div>
+          <div class="flex items-center gap-2">✓ Zero external message broker required (Plan C local CSV fallback)</div>
+        </div>
       </div>
-      <div class="p-4 text-left border-l border-slate-800/80">
-        <div class="font-mono text-3xl font-extrabold text-white">99.4%</div>
-        <div class="text-xs text-slate-400 mt-1 uppercase font-medium tracking-wider">Triage F1-Score (SAW/TOPSIS)</div>
-      </div>
-      <div class="p-4 text-left border-l border-slate-800/80">
-        <div class="font-mono text-3xl font-extrabold text-amber-400">78%</div>
-        <div class="text-xs text-slate-400 mt-1 uppercase font-medium tracking-wider">Cloud Bandwidth Savings</div>
-      </div>
-      <div class="p-4 text-left border-l border-slate-800/80">
-        <div class="font-mono text-3xl font-extrabold text-white">24/7</div>
-        <div class="text-xs text-slate-400 mt-1 uppercase font-medium tracking-wider">Autonomous Agent Loop</div>
+
+      <div class="lg:col-span-7">
+        <div class="rounded-xl border border-surface-border bg-surface-card overflow-hidden">
+          <div class="bg-surface-subtle px-4 py-2 border-b border-surface-border flex items-center justify-between text-xs font-mono text-slate-400">
+            <span>example_pipeline.py</span>
+            <span class="text-slate-500">Python 3.11</span>
+          </div>
+          <pre class="p-5 font-mono text-xs text-slate-300 overflow-x-auto leading-relaxed">
+<span class="text-blue-400">from</span> wvamoss_edge <span class="text-blue-400">import</span> EdgeSensorPipeline, SAWEvaluator, ClaudeDiagnostics
+
+<span class="text-slate-500"># 1. Initialize local sensor acquisition</span>
+pipeline = EdgeSensorPipeline(pins={<span class="text-emerald-400">"pH"</span>: 17, <span class="text-emerald-400">"EC"</span>: 27, <span class="text-emerald-400">"Temp"</span>: 22, <span class="text-emerald-400">"DO"</span>: 23})
+
+<span class="text-slate-500"># 2. Select model via Simple Additive Weighting criteria</span>
+evaluator = SAWEvaluator(weights={<span class="text-emerald-400">"f1"</span>: 0.25, <span class="text-emerald-400">"latency"</span>: 0.35, <span class="text-emerald-400">"ram"</span>: 0.20, <span class="text-emerald-400">"cpu"</span>: 0.20})
+model = evaluator.get_optimal_model(target=<span class="text-emerald-400">"raspberry_pi_4"</span>)
+
+<span class="text-slate-500"># 3. Stream detection loop</span>
+<span class="text-blue-400">for</span> window <span class="text-blue-400">in</span> pipeline.stream(interval_sec=1.0):
+    anomaly = model.predict(window)
+    <span class="text-purple-400">if</span> anomaly.is_critical:
+        <span class="text-slate-500"># Trigger Claude 3.5 Sonnet diagnostic reasoning agent</span>
+        diagnosis = ClaudeDiagnostics.analyze(anomaly, tools=[pipeline.actuators])
+        diagnosis.execute_mitigation()</pre>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Platform Core Features -->
-  <section id="platform" class="py-24 px-6 max-w-7xl mx-auto border-t border-slate-900">
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400">Core Capabilities</h2>
-      <p class="mt-3 text-3xl sm:text-4xl font-bold text-white tracking-tight">Engineered for Resource-Constrained Environments</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8">
-      <!-- Card 1 -->
-      <div class="p-8 rounded-2xl bg-slate-900/40 border border-slate-800/90 hover:border-amber-500/40 transition group">
-        <div class="font-mono text-xs text-amber-400 mb-4 font-bold">01 // EDGE ARTIFACT</div>
-        <h3 class="text-xl font-bold text-white group-hover:text-amber-300 transition">Multi-Model Adaptive Selection</h3>
-        <p class="mt-3 text-sm text-slate-400 leading-relaxed">
-          Dynamic runtime switching between Spiking Neural Networks (SNN), Convolutional Autoencoders (CAE), and Isolation Forest based on available CPU cycles, RAM envelope, and detection urgency.
-        </p>
-        <div class="mt-6 pt-4 border-t border-slate-800/60 font-mono text-[11px] text-slate-500">
-          ARM64 / Raspberry Pi / Edge Gateway
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="p-8 rounded-2xl bg-slate-900/40 border border-slate-800/90 hover:border-amber-500/40 transition group">
-        <div class="font-mono text-xs text-amber-400 mb-4 font-bold">02 // COGNITIVE REASONING</div>
-        <h3 class="text-xl font-bold text-white group-hover:text-amber-300 transition">Claude 3.5 Sonnet Diagnostic Loop</h3>
-        <p class="mt-3 text-sm text-slate-400 leading-relaxed">
-          When edge models flag persistent state anomalies, pre-filtered vector snapshots trigger Claude 3.5 Sonnet with Tool Use to analyze telemetry patterns, cross-correlate environmental drift, and generate remediation actions.
-        </p>
-        <div class="mt-6 pt-4 border-t border-slate-800/60 font-mono text-[11px] text-slate-500">
-          Prompt Caching · Structured JSON Output
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="p-8 rounded-2xl bg-slate-900/40 border border-slate-800/90 hover:border-amber-500/40 transition group">
-        <div class="font-mono text-xs text-amber-400 mb-4 font-bold">03 // AUTONOMOUS MITIGATION</div>
-        <h3 class="text-xl font-bold text-white group-hover:text-amber-300 transition">Closed-Loop Actuation Protocol</h3>
-        <p class="mt-3 text-sm text-slate-400 leading-relaxed">
-          Direct bidirectional control via secure telemetry relays. Execute automated fail-safes, actuator recalibration, or operational fallback routines without manual human intervention.
-        </p>
-        <div class="mt-6 pt-4 border-t border-slate-800/60 font-mono text-[11px] text-slate-500">
-          Zero-Trust Relay · Sub-second Dispatch
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Architecture Pipeline Section -->
-  <section id="architecture" class="py-24 px-6 max-w-6xl mx-auto border-t border-slate-900">
-    <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-4">
-      <div>
-        <h2 class="text-xs font-mono uppercase tracking-widest text-amber-400">Technical Architecture</h2>
-        <p class="mt-2 text-3xl font-bold text-white">Hybrid Edge-to-Agent Pipeline</p>
-      </div>
-      <div class="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-        anthropic.messages.create() // tool_use enabled
-      </div>
-    </div>
-
-    <div class="rounded-2xl bg-slate-950 border border-slate-800 overflow-hidden shadow-2xl font-mono text-xs sm:text-sm">
-      <div class="bg-slate-900/90 px-5 py-3 border-b border-slate-800 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
-          <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
-          <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
-          <span class="ml-2 text-slate-400 text-xs">edgepulse_triage_pipeline.py</span>
-        </div>
-        <span class="text-amber-400/80 text-xs font-semibold">Anthropic API v1</span>
-      </div>
-
-      <pre class="p-6 text-slate-300 overflow-x-auto leading-relaxed">
-<span class="text-slate-500"># 1. Edge Ingestion & Multi-Criteria Model Selection (SAW Framework)</span>
-<span class="text-amber-400">selected_model</span> = edge_evaluator.rank(
-    candidates=[<span class="text-emerald-400">"SNN_32_16"</span>, <span class="text-emerald-400">"CAE_16_8_16"</span>, <span class="text-emerald-400">"iForest_100t"</span>],
-    weights={<span class="text-emerald-400">"f1"</span>: 0.25, <span class="text-emerald-400">"latency"</span>: 0.35, <span class="text-emerald-400">"ram"</span>: 0.20, <span class="text-emerald-400">"cpu"</span>: 0.20}
-)
-
-<span class="text-slate-500"># 2. Local Edge Inference & Anomaly Gate Trigger</span>
-anomaly_event = selected_model.detect(sensor_window=stream.get_telemetry())
-<span class="text-purple-400">if</span> anomaly_event.is_critical:
-    <span class="text-slate-500"># 3. Triage Vector forwarded to Claude 3.5 Sonnet Diagnostic Agent</span>
-    response = anthropic_client.messages.create(
-        model=<span class="text-emerald-400">"claude-3-5-sonnet-20241022"</span>,
-        max_tokens=1024,
-        tools=[mitigation_tool, actuator_controller],
-        system=<span class="text-emerald-400">"You are EdgePulse Diagnostics Agent. Analyze edge sensor drift and emit mitigation RPCs."</span>,
-        messages=[{<span class="text-emerald-400">"role"</span>: <span class="text-emerald-400">"user"</span>, <span class="text-emerald-400">"content"</span>: anomaly_event.to_vector_context()}]
-    )
-    dispatch_actuation(response.tool_calls)</pre>
-    </div>
-  </section>
-
-  <!-- Waitlist CTA Section -->
-  <section id="waitlist" class="py-24 px-6 max-w-4xl mx-auto text-center border-t border-slate-900">
-    <div class="p-12 rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/20 shadow-2xl relative overflow-hidden">
-      <div class="absolute -right-20 -top-20 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Deploy Intelligent Edge Triage Today</h2>
-      <p class="mt-4 text-slate-400 max-w-xl mx-auto text-sm sm:text-base">
-        Join our early pilot program. Get zero-latency edge anomaly models backed by Claude 3.5 Sonnet diagnostic reasoning for your industrial infrastructure.
+  <!-- CTA Request Access -->
+  <section id="install" class="py-20 px-6 max-w-4xl mx-auto text-center border-t border-surface-border">
+    <div class="p-10 rounded-2xl bg-surface-card border border-surface-border shadow-xl">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white">Join WVamoss Labs Developer Preview</h2>
+      <p class="text-xs sm:text-sm text-slate-400 max-w-md mx-auto mt-3">
+        Deploy autonomous edge intelligence on your edge nodes with enterprise telemetry diagnostic support.
       </p>
 
-      <form class="mt-8 max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); alert('Thank you! Your request for WVamoss Labs EdgePulse pilot has been registered. Our team will contact you at founder@wvamosslabs.me.');">
+      <form class="mt-6 max-w-md mx-auto flex gap-2" onsubmit="event.preventDefault(); alert('Pilot access requested for ' + this.email.value + '. Our team will reach out from founder@wvamosslabs.me');">
         <input 
           type="email" 
+          name="email"
           required 
-          placeholder="Enter your enterprise email..." 
-          class="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition"
+          placeholder="developer@company.com" 
+          class="flex-1 px-3.5 py-2.5 rounded-lg bg-surface-base border border-surface-border text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
         >
         <button 
           type="submit" 
-          class="px-6 py-3 rounded-xl font-bold text-sm bg-amber-500 hover:bg-amber-400 text-slate-950 transition whitespace-nowrap shadow-lg shadow-amber-500/20"
+          class="px-5 py-2.5 rounded-lg font-semibold text-xs bg-blue-600 hover:bg-blue-500 text-white transition"
         >
-          Request Access
+          Request Pilot
         </button>
       </form>
 
-      <div class="mt-6 flex items-center justify-center gap-6 text-xs text-slate-500">
-        <span>✓ 14-Day Free Pilot</span>
-        <span>✓ Custom Edge Hardware Support</span>
-        <span>✓ SLA Guaranteed</span>
+      <div class="mt-4 text-[11px] font-mono text-slate-500">
+        Direct technical inquiry: <a href="mailto:founder@wvamosslabs.me" class="text-slate-400 hover:underline">founder@wvamosslabs.me</a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-900 py-12 px-6 bg-slate-950">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-500">
-      <div class="flex items-center gap-3">
-        <div class="w-6 h-6 rounded-md bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-xs">
-          W
-        </div>
-        <span>© 2026 WVamoss Labs Technologies Inc. All rights reserved.</span>
+  <footer class="border-t border-surface-border py-10 px-6 bg-surface-base text-xs text-slate-500 font-mono">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-5 h-5 rounded bg-blue-600 flex items-center justify-center text-[10px] text-white font-bold">W</div>
+        <span>© 2026 WVamoss Labs Technologies. All rights reserved.</span>
       </div>
-
       <div class="flex items-center gap-6">
-        <span>Contact: <a href="mailto:founder@wvamosslabs.me" class="text-slate-400 hover:text-amber-400">founder@wvamosslabs.me</a></span>
-        <span class="text-slate-700">|</span>
-        <span class="text-amber-400/80 font-mono">Built with Anthropic Claude 3.5 Sonnet API</span>
+        <a href="#overview" class="hover:text-slate-300">Overview</a>
+        <a href="#benchmarks" class="hover:text-slate-300">Benchmarks</a>
+        <a href="#docs" class="hover:text-slate-300">Docs</a>
+        <a href="mailto:founder@wvamosslabs.me" class="text-slate-400 hover:text-white">Contact</a>
       </div>
     </div>
   </footer>
